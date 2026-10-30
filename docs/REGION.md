@@ -53,7 +53,7 @@ when the 1000-hour lease lapses.
 
 ### Option 3 — Root, then change the region
 
-Rooting a C2 is feasible: the `faultmanager` method covers webOS 4.0 and later
+Rooting a C2/C3 is feasible: the `faultmanager` method covers webOS 4.0 and later
 and, as of January 2025, had no patched firmware
 ([webosbrew.org/rooting](https://www.webosbrew.org/rooting/)).
 

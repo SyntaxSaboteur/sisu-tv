@@ -1,10 +1,10 @@
 # Sisu TV
 
-**A Finnish front door for an LG C2 that thinks it lives in Bangkok.**
+**A Finnish front door for an LG C-series OLED that thinks it lives in Bangkok.**
 
 ![Sisu TV home screen](docs/assets/home.jpg)
 
-A 77" LG C2 bought in Thailand is a beautiful panel with a frustrating software
+A 77" LG OLED bought in Thailand is a beautiful panel with a frustrating software
 life in Finland: the LG Content Store serves it the Asian catalogue, so Yle
 Areena, MTV Katsomo and Ruutu are never offered, and firmware updates come from
 a channel that has nothing for a Finnish household.
@@ -14,7 +14,18 @@ touching the TV's region: it puts a Finnish launcher on the TV, opens those
 services straight from the network, and shows you exactly what the TV believes
 about itself.
 
-Built for **webOS 22 / LG C2 (2022)**, but it runs on webOS 4.0 and newer.
+Built for **webOS 22–23 (LG C2 / C3)**, and runs on webOS 4.0 and newer.
+
+| Model year | webOS | Engine | Status |
+| --- | --- | --- | --- |
+| C2 (2022) | 22 (SDK 7.x) | Chromium 87+ | supported |
+| C3 (2023) | 23 (SDK 7.x+) | Chromium 87+ | supported |
+| 2024+ | 24+ | Chromium 87+ | untested, same APIs |
+
+The web layer is identical across those releases; what differs is the
+firmware-bound Home screen and the rooting profile, which is why
+[docs/TAKE-OVER-THE-UI.md](docs/TAKE-OVER-THE-UI.md) starts by reading the
+firmware version.
 
 ---
 
@@ -76,7 +87,7 @@ the firmware update channel and the default time zone all follow it. A Bangkok
 unit is packed for the Asia/Pacific market, so Helsinki is not a region it was
 sold into.
 
-Changing that value means writing NVRAM, which requires root. Rooting a C2 is
+Changing that value means writing NVRAM, which requires root. Rooting a C2/C3 is
 possible but is a separate, riskier project. Sisu TV deliberately avoids it:
 the launcher works today, on an unmodified TV, in developer mode.
 
@@ -111,7 +122,7 @@ docs/                research, installation, region notes, architecture
 
 - **No toolkit.** `npm run package` writes the ar archive and tar streams with
   Node's `zlib`; you do not need the webOS SDK to build, only to install.
-- **Chromium-safe CSS.** webOS 22 ships Chromium 87+, but the stylesheet avoids
+- **Chromium-safe CSS.** webOS 22/23 ship Chromium 87+, but the stylesheet avoids
   `aspect-ratio`, `color-mix()` and flex `gap` so the same code renders on
   webOS 4/5 panels.
 - **Honest failures.** Every Luna call resolves to `{ ok, error }` with a
@@ -128,7 +139,7 @@ the three launch strategies and the packaging pipeline.
 
 - Verified in a headless Chromium at 1920×1080 (screenshots above) and by unit
   tests.
-- Not yet verified on physical C2 hardware — the Luna calls are written against
+- Not yet verified on physical hardware — the Luna calls are written against
   LG's documented services and degrade gracefully when a call is refused.
 - The region/rooting research is documented but not automated: Sisu TV only
   ever *reads* `contiArea2All`, never writes it.

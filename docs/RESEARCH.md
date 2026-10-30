@@ -1,11 +1,21 @@
 # Research: what is actually running on the TV
 
-This document records how the C2's software was taken apart, what was measured,
+This document records how the TV's software was taken apart, what was measured,
 and which conclusions are evidence versus inference. It is the background for
 every design decision in Sisu TV.
 
-Target: **LG OLED77C2** (2022), webOS 22, SDK 7.x, bought in Bangkok, running in
-Finland.
+Target: an **LG C-series OLED bought in Bangkok** and running in Finland.
+Model year is unconfirmed between two close variants:
+
+| Variant | Year | webOS | Engine | Note |
+| --- | --- | --- | --- | --- |
+| OLED77C2 | 2022 | 22 (SDK 7.x) | Chromium 87+ | original assumption |
+| OLED77C3 | 2023 | 23 (SDK 7.x+) | Chromium 87+ | reported later by the owner |
+
+Nothing in this research depends on which one it is — the packaging format,
+Luna surface and region mechanism are shared — but the Home-screen replacement
+in [TAKE-OVER-THE-UI.md](TAKE-OVER-THE-UI.md) **is** firmware-specific, so the
+exact model string and firmware build must be read before that step.
 
 ---
 
@@ -256,7 +266,7 @@ sets your syntax floor:
 | 4.x | Chromium 53 |
 | 5.x | Chromium 68 |
 | 6.x | Chromium 79 |
-| 7.x and later (webOS 22 on the C2) | Chromium 87+ |
+| 7.x and later (webOS 22 / 23 on C2 / C3) | Chromium 87+ |
 
 Sisu TV targets the Chromium 79 floor so the same build also runs on older
 panels; the stylesheet avoids `aspect-ratio`, `color-mix()` and flex `gap`.
@@ -269,7 +279,7 @@ Rooting, per [webosbrew.org/rooting](https://www.webosbrew.org/rooting/):
 | DejaVuln | webOS 3.5+ | Patches rolling out from recent models |
 | WTA / crashd / RootMy.TV | webOS 3–6 | Patched (2022–2024) |
 
-So a C2 is likely rootable via faultmanager, which is what would make a region
+So a C2/C3 is likely rootable via faultmanager, which is what would make a region
 change possible. Sisu TV does not require it.
 
 ---
@@ -283,7 +293,7 @@ change possible. Sisu TV does not require it.
 | EU = 19461, US = 22282 | **Verified** in Region Changer source (comment + decode) |
 | Region writes need `lowlevelstorage/setData` (elevated) | **Verified** by the service's own design and comments |
 | `listApps` denied to web apps | **Verified** via LG forum report |
-| webOS 22 = Chromium 87+ | **Verified** in webosbrew's engine table |
+| webOS 22/23 = Chromium 87+ | **Verified** in webosbrew's engine table |
 | Dev Mode = 1000 h, apps removed on expiry | **Verified** in webosbrew's Dev Mode guide |
 | faultmanager unpatched for webOS 4+ | **Verified** as of the cited doc (Jan 2025) |
 | LG serves firmware per market | **Inferred** from the region mechanism and observed "no updates" |
