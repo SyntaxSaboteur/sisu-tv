@@ -4,18 +4,13 @@ This document records how the TV's software was taken apart, what was measured,
 and which conclusions are evidence versus inference. It is the background for
 every design decision in Sisu TV.
 
-Target: an **LG C-series OLED bought in Bangkok** and running in Finland.
-Model year is unconfirmed between two close variants:
+Target: **LG OLED77C2**, 2022, webOS 22 (SDK 7.x), bought in Bangkok, running in
+Finland. Confirmed by the owner.
 
-| Variant | Year | webOS | Engine | Note |
-| --- | --- | --- | --- | --- |
-| OLED77C2 | 2022 | 22 (SDK 7.x) | Chromium 87+ | original assumption |
-| OLED77C3 | 2023 | 23 (SDK 7.x+) | Chromium 87+ | reported later by the owner |
-
-Nothing in this research depends on which one it is — the packaging format,
-Luna surface and region mechanism are shared — but the Home-screen replacement
-in [TAKE-OVER-THE-UI.md](TAKE-OVER-THE-UI.md) **is** firmware-specific, so the
-exact model string and firmware build must be read before that step.
+The C2 and the 2023 C3 share the packaging format, the Luna surface and the
+region mechanism; they differ in the firmware-bound Home screen, which is why the
+Home replacement in [TAKE-OVER-THE-UI.md](TAKE-OVER-THE-UI.md) is
+firmware-specific rather than model-specific.
 
 ---
 
@@ -275,12 +270,15 @@ Rooting, per [webosbrew.org/rooting](https://www.webosbrew.org/rooting/):
 
 | Method | Reach | Status |
 | --- | --- | --- |
-| faultmanager | webOS 4.0+ | No patched firmware as of Jan 2025 |
+| faultmanager | webOS 4.0 – 10.0 | **Mostly patched**: as of 2025-08-24 the latest firmware for essentially all webOS 5/6/7/9 models is patched — check [CanI.RootMy.TV](https://cani.rootmy.tv/) |
 | DejaVuln | webOS 3.5+ | Patches rolling out from recent models |
 | WTA / crashd / RootMy.TV | webOS 3–6 | Patched (2022–2024) |
 
-So a C2/C3 is likely rootable via faultmanager, which is what would make a region
-change possible. Sisu TV does not require it.
+So whether this C2 is rootable depends entirely on **which firmware it is
+sitting on**, not on the model. A TV that has been unable to update for a year is
+a plausible candidate, since the patch only arrives with a firmware update. That
+is checked with [CanI.RootMy.TV](https://cani.rootmy.tv/) using the model and
+firmware strings. Sisu TV does not require root either way.
 
 ---
 
@@ -295,7 +293,8 @@ change possible. Sisu TV does not require it.
 | `listApps` denied to web apps | **Verified** via LG forum report |
 | webOS 22/23 = Chromium 87+ | **Verified** in webosbrew's engine table |
 | Dev Mode = 1000 h, apps removed on expiry | **Verified** in webosbrew's Dev Mode guide |
-| faultmanager unpatched for webOS 4+ | **Verified** as of the cited doc (Jan 2025) |
+| faultmanager works on webOS 4.0–10.0 | **Verified** in its README |
+| most webOS 5+ firmware is patched (Aug 2025) | **Verified** in the same README — supersedes the older "no patched firmware" claim |
 | LG serves firmware per market | **Inferred** from the region mechanism and observed "no updates" |
 | A Finnish browser session satisfies Yle/Ruutu geo-checks | **Inferred** from those services' normal geo-IP behaviour; not tested on the TV |
 

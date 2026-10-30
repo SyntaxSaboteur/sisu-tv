@@ -14,12 +14,13 @@ touching the TV's region: it puts a Finnish launcher on the TV, opens those
 services straight from the network, and shows you exactly what the TV believes
 about itself.
 
-Built for **webOS 22–23 (LG C2 / C3)**, and runs on webOS 4.0 and newer.
+Built for **webOS 22 on the LG C2** (the TV this was written for), and runs on
+webOS 4.0 and newer.
 
 | Model year | webOS | Engine | Status |
 | --- | --- | --- | --- |
-| C2 (2022) | 22 (SDK 7.x) | Chromium 87+ | supported |
-| C3 (2023) | 23 (SDK 7.x+) | Chromium 87+ | supported |
+| **C2 (2022) — this TV** | **22 (SDK 7.x)** | Chromium 87+ | target, tested in emulation |
+| C3 (2023) | 23 (SDK 7.x+) | Chromium 87+ | expected to work, untested |
 | 2024+ | 24+ | Chromium 87+ | untested, same APIs |
 
 The web layer is identical across those releases; what differs is the
@@ -87,8 +88,11 @@ the firmware update channel and the default time zone all follow it. A Bangkok
 unit is packed for the Asia/Pacific market, so Helsinki is not a region it was
 sold into.
 
-Changing that value means writing NVRAM, which requires root. Rooting a C2/C3 is
-possible but is a separate, riskier project. Sisu TV deliberately avoids it:
+Changing that value means writing NVRAM, which requires root. Rooting a C2 is
+possible *if its firmware predates LG's patch* — as of August 2025 most webOS 5+
+firmware is patched, so this is a per-build question, not a model question. A TV
+that has been stuck without updates for a year may be exactly the rootable case.
+Check [CanI.RootMy.TV](https://cani.rootmy.tv/) before anything else. Sisu TV deliberately avoids it:
 the launcher works today, on an unmodified TV, in developer mode.
 
 **[docs/REGION.md](docs/REGION.md)** lays out all four options (stay, developer

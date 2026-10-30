@@ -21,7 +21,7 @@ the tuner, HDR pipeline and Netflix DRM work.
 
 | Piece | Project | Role |
 | --- | --- | --- |
-| Root | [faultmanager-autoroot](https://github.com/throwaway96/faultmanager-autoroot) | webOS 4.0+, including webOS 22 (C2) and webOS 23 (C3). No patched firmware as of Jan 2025 ([source](https://www.webosbrew.org/rooting/)) |
+| Root | [faultmanager-autoroot](https://github.com/throwaway96/faultmanager-autoroot) | webOS 4.0–10.0, **but most webOS 5+ firmware is patched as of Aug 2025** — a per-firmware question, checked at [CanI.RootMy.TV](https://cani.rootmy.tv/) |
 | Package manager | [Homebrew Channel](https://github.com/webosbrew/webos-homebrew-channel) | Installs and updates homebrew apps, including the Home replacements |
 | New Home | [Lumaglass](https://github.com/federi95/lumaglass), [webos-home](https://github.com/Mr-Neutr0n/webos-home) | Replaces `com.webos.app.home`'s view |
 | De-bloat (optional) | [lgtv-tbc](https://github.com/zopieux/lgtv-tbc) | Replaces LG's bootstrap HTTP server: blocks forced updates, disables bloatware, stops device-ID phoning home |
@@ -36,7 +36,7 @@ the tuner, HDR pipeline and Netflix DRM work.
 | Tested on | webOS Hub22, SDK 7.5.9-36, firmware 04.56.75, aarch64 | webOS Hub22, similar |
 | Good fit if | You want a real replacement UI | You want a small, auditable change |
 
-**Neither has been validated on an APAC C2/C3 firmware.** Both projects ship
+**Neither has been validated on an APAC C2 firmware.** Both projects ship
 compatibility inspection precisely because the Home binary and QML differ per
 firmware. Treat "not tested on your build" as the default, and run their
 inspection before installing.
@@ -58,9 +58,25 @@ failed check.
 
 ### 1. Root
 
-Follow the faultmanager README exactly. It is an app-based exploit that installs
-root and the Homebrew Channel; there is no firmware flashing and no serial
-console.
+**First**: look up your model + firmware on [CanI.RootMy.TV](https://cani.rootmy.tv/).
+If it says patched, stop — nothing below applies, and the honest options are an
+external box or a mainboard swap.
+
+If it is vulnerable, faultmanager-autoroot does the work over the Developer
+Mode SSH connection you already have. It is not a firmware flash and needs no
+serial console. Things the README is emphatic about:
+
+- The exploit **intentionally triggers a segfault**. That is expected.
+- On webOS 7+ you may need **several attempts** before `devmode_enabled` is
+  detected.
+- After `Payload complete`, **uninstall the LG Developer Mode app before
+  rebooting**, and do not reinstall it while the TV is rooted.
+- Disable **Quick Start+**, or Homebrew Channel may not appear after the reboot.
+- A wrong TV clock can make the IPK install fail (`errorCode -5`).
+
+> Practical consequence for this project: while rooted, apps are installed
+> through the **Homebrew Channel**, not Developer Mode. Install Sisu TV *before*
+> rooting, or rebuild it as a homebrew package afterwards.
 
 Exit criteria:
 - `ssh root@<tv-ip>` works (root shell)
