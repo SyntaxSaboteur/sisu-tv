@@ -1,0 +1,19 @@
+# Build output
+build/
+
+# Node
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# webOS SDK leftovers
+*.ipk
+.ipk/
+*.ares/
+devices.json

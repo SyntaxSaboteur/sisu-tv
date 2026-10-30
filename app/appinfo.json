@@ -1,0 +1,23 @@
+{
+  "id": "com.syntaxsaboteur.sisutv",
+  "version": "1.0.0",
+  "vendor": "SyntaxSaboteur",
+  "type": "web",
+  "main": "index.html",
+  "title": "Sisu TV",
+  "appDescription": "Suomalainen etusivu LG webOS -televisiolle, joka on lukittu Aasian alueelle.",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "bgColor": "#070b16",
+  "iconColor": "#070b16",
+  "disableBackHistoryAPI": true,
+  "handlesRelaunch": false,
+  "supportedOrientations": [
+    "landscape"
+  ],
+  "requiredPermissions": [
+    "time.query",
+    "activity.operation",
+    "network.operation"
+  ]
+}

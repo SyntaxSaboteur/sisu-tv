@@ -1,0 +1,22 @@
+{
+  "name": "sisu-tv",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sisu TV - a Finnish front door for an Asia-locked LG C2 running webOS 22.",
+  "license": "MIT",
+  "author": "SyntaxSaboteur",
+  "homepage": "https://github.com/SyntaxSaboteur/sisu-tv",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SyntaxSaboteur/sisu-tv.git"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\"",
+    "package": "node tools/build-ipk.mjs --clean",
+    "preview": "node tools/preview-server.mjs",
+    "icons": "python3 tools/make_icons.py"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

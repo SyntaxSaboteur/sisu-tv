@@ -1,0 +1,603 @@
+/*
+ * Sisu TV - 10-foot UI styling.
+ *
+ * Written for the Chromium build shipped with webOS 22: no flex `gap`, no
+ * `inset`, no `color-mix()`, no `aspect-ratio`. Spacing that would normally use
+ * `gap` is done with margins so it also renders on older webOS 4/5 panels.
+ */
+
+:root {
+  --bg: #070b16;
+  --bg-2: #0b1224;
+  --text: #eef2ff;
+  --muted: #93a0bd;
+  --accent: #6ee7c8;
+  --accent-2: #7aa2ff;
+  --danger: #ff6b81;
+  --warn: #ffc46b;
+  --ok: #6ee7a8;
+  --radius: 18px;
+  --gutter: 64px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "LG Smart UI", "LG Smart UI Display", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow: hidden;
+  user-select: none;
+  cursor: default;
+}
+
+/* Soft aurora wash behind everything. */
+.aurora {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 620px at 12% -10%, rgba(110, 231, 200, 0.16), transparent 60%),
+    radial-gradient(900px 700px at 88% 0%, rgba(122, 162, 255, 0.16), transparent 62%),
+    radial-gradient(1000px 800px at 50% 120%, rgba(124, 58, 237, 0.14), transparent 65%),
+    linear-gradient(180deg, var(--bg-2), var(--bg) 55%);
+}
+
+/* ---------- top bar ---------- */
+
+.topbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 30px var(--gutter) 8px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  margin-right: 26px;
+}
+
+.brand-mark {
+  display: block;
+  width: 50px;
+  height: 50px;
+  margin-right: 14px;
+  border-radius: 14px;
+  font-size: 29px;
+  font-weight: 800;
+  line-height: 50px;
+  text-align: center;
+  color: #04140f;
+  background: linear-gradient(135deg, var(--accent), #3dd6ff);
+  box-shadow: 0 8px 30px rgba(110, 231, 200, 0.28);
+}
+
+.brand-name {
+  font-size: 29px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.brand-name em {
+  font-style: normal;
+  margin-left: 6px;
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tagline {
+  margin: 0;
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 62ch;
+  line-height: 1.35;
+}
+
+.region-pill {
+  margin-left: auto;
+  align-self: center;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--warn);
+  border: 1px solid rgba(255, 196, 107, 0.4);
+  background: rgba(255, 196, 107, 0.08);
+  border-radius: 999px;
+  padding: 7px 14px;
+}
+
+.region-pill[hidden] {
+  display: none;
+}
+
+.region-pill.ok {
+  color: var(--ok);
+  border-color: rgba(110, 231, 168, 0.4);
+  background: rgba(110, 231, 168, 0.08);
+}
+
+.clock {
+  margin-left: 24px;
+  text-align: right;
+  padding-left: 20px;
+}
+
+.clock-time {
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.clock-meta {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin: 0 8px 3px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+/*
+ * The aurora layer is position:fixed, so it paints above plain in-flow blocks.
+ * Every content band is lifted into the same painting layer to stay visible.
+ */
+.topbar,
+.chips,
+.stage,
+.hints {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- category chips ---------- */
+
+.chips {
+  display: flex;
+  padding: 16px var(--gutter) 20px;
+}
+
+.chip {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  font: inherit;
+  font-size: 16px;
+  padding: 9px 20px;
+  margin-right: 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease, color 0.12s ease;
+}
+
+.chip.is-active {
+  color: #04140f;
+  background: linear-gradient(120deg, var(--accent), #8ff3d8);
+  border-color: transparent;
+  font-weight: 700;
+}
+
+.chip.is-focused {
+  box-shadow: 0 0 0 3px rgba(110, 231, 200, 0.75);
+  transform: translateY(-1px);
+}
+
+.chip.is-focused:not(.is-active) {
+  color: var(--text);
+}
+
+/* ---------- grid ---------- */
+
+.stage {
+  padding: 0 var(--gutter);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  gap: 20px;
+}
+
+.tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 120% at 0% 0%, rgba(255, 255, 255, 0.09), transparent 55%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+  overflow: hidden;
+  text-align: left;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+
+/* 16:9-ish without aspect-ratio (not in Chromium 79). */
+.tile::before {
+  content: "";
+  display: block;
+  padding-top: 52%;
+}
+
+.tile-glow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: radial-gradient(85% 100% at 8% 0%, var(--brand), transparent 64%);
+  opacity: 0.2;
+}
+
+.tile-mono {
+  position: absolute;
+  right: 16px;
+  bottom: 2px;
+  font-size: 70px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--brand);
+  opacity: 0.3;
+  letter-spacing: -0.04em;
+}
+
+.tile-body {
+  position: absolute;
+  left: 20px;
+  right: 84px;
+  bottom: 16px;
+}
+
+.tile-name {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.tile-tag {
+  display: block;
+  margin-top: 3px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.tile-badge {
+  position: absolute;
+  top: 12px;
+  left: 18px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: #0b0b0b;
+  background: var(--danger);
+}
+
+.tile-badge[hidden] {
+  display: none;
+}
+
+.tile.is-focused {
+  transform: translateY(-4px) scale(1.035);
+  border-color: rgba(110, 231, 200, 0.85);
+  box-shadow:
+    0 0 0 3px rgba(110, 231, 200, 0.55),
+    0 26px 60px rgba(0, 0, 0, 0.55);
+  z-index: 3;
+}
+
+/* ---------- info bar ---------- */
+
+.info-bar {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  border-radius: 14px;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.14s ease, transform 0.14s ease, background 0.14s ease;
+}
+
+.info-bar-text {
+  display: block;
+}
+
+.info-bar-text strong {
+  display: block;
+  font-size: 16px;
+}
+
+.info-bar-text span {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.info-bar-icon {
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin-right: 16px;
+  border-radius: 50%;
+  background: rgba(122, 162, 255, 0.18);
+  color: var(--accent-2);
+  font-weight: 800;
+  font-family: Georgia, serif;
+  line-height: 30px;
+  text-align: center;
+}
+
+.info-bar-key {
+  margin-left: auto;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  padding: 3px 9px;
+}
+
+.info-bar.is-focused {
+  border-style: solid;
+  border-color: var(--accent);
+  background: rgba(110, 231, 200, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 3px rgba(110, 231, 200, 0.4);
+}
+
+/* ---------- hints ---------- */
+
+.hints {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 18px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.hints span {
+  margin-right: 24px;
+}
+
+kbd {
+  display: inline-block;
+  min-width: 24px;
+  margin-right: 4px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  font: inherit;
+  font-size: 11px;
+  text-align: center;
+  color: var(--text);
+}
+
+/* ---------- overlay ---------- */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 40px;
+  background: rgba(4, 8, 18, 0.8);
+  z-index: 20;
+}
+
+.overlay[hidden] {
+  display: none;
+}
+
+.panel {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1180px;
+  max-height: 92vh;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(170deg, #101a30, #0a1020 70%);
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 26px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.panel-close {
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.panel-close:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.panel-body {
+  padding: 2px 26px 18px;
+  max-height: calc(92vh - 72px);
+  overflow-y: auto;
+}
+
+.loading {
+  color: var(--muted);
+  padding: 18px 0;
+}
+
+.section {
+  margin-top: 14px;
+}
+
+.section h3 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.kv {
+  display: flex;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 15px;
+}
+
+.kv:last-child {
+  border-bottom: 0;
+}
+
+.kv-label {
+  width: 250px;
+  min-width: 250px;
+  padding-right: 18px;
+  color: var(--muted);
+}
+
+.kv-value {
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.kv-value.ok {
+  color: var(--ok);
+}
+
+.kv-value.warn {
+  color: var(--warn);
+}
+
+.kv-value.bad {
+  color: var(--danger);
+}
+
+.kv-note {
+  display: block;
+  margin-top: 3px;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.explain {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border-left: 3px solid var(--accent-2);
+  background: rgba(122, 162, 255, 0.08);
+  font-size: 14px;
+  line-height: 1.5;
+  color: #c9d4ee;
+}
+
+.explain strong {
+  color: var(--text);
+}
+
+/* ---------- toast ---------- */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 80px;
+  margin-left: -180px;
+  width: 360px;
+  padding: 13px 20px;
+  border-radius: 12px;
+  background: rgba(12, 20, 38, 0.96);
+  border: 1px solid rgba(110, 231, 200, 0.4);
+  font-size: 15px;
+  text-align: center;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+  z-index: 40;
+}
+
+.toast[hidden] {
+  display: none;
+}
+
+/* ---------- smaller windows (desktop preview) ---------- */
+
+@media (max-width: 1500px) {
+  :root {
+    --gutter: 40px;
+  }
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .clock-time {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .tagline {
+    display: none;
+  }
+}

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sisu TV</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">S</span>
+      <span class="brand-name">SISU<em>TV</em></span>
+    </div>
+    <p class="tagline">Suomalainen etusivu televisiolle, joka luulee olevansa Aasiassa</p>
+    <span class="region-pill" id="regionPill" hidden></span>
+    <div class="clock">
+      <div class="clock-time" id="clock-time">--:--</div>
+      <div class="clock-meta">
+        <span id="clock-date">--</span>
+        <span class="dot" aria-hidden="true"></span>
+        <span class="clock-tz">Helsinki</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chips" id="chips" aria-label="Kategoriat"></nav>
+
+  <main class="stage">
+    <section class="grid" id="grid" aria-label="Palvelut"></section>
+
+    <button class="info-bar" id="infoBar" type="button">
+      <span class="info-bar-icon" aria-hidden="true">i</span>
+      <span class="info-bar-text">
+        <strong>TV-tiedot</strong>
+        <span>Alue, firmware ja päivitykset</span>
+      </span>
+      <span class="info-bar-key" aria-hidden="true">OK</span>
+    </button>
+  </main>
+
+  <footer class="hints">
+    <span><kbd>◀</kbd><kbd>▶</kbd> kategoria</span>
+    <span><kbd>▲</kbd><kbd>▼</kbd> liiku</span>
+    <span><kbd>OK</kbd> avaa</span>
+    <span><kbd>BACK</kbd> takaisin</span>
+  </footer>
+
+  <section class="overlay" id="infoOverlay" hidden>
+    <div class="panel" role="dialog" aria-modal="true" aria-label="TV-tiedot">
+      <div class="panel-head">
+        <h2>TV-tiedot</h2>
+        <button class="panel-close" id="infoClose" type="button">Sulje</button>
+      </div>
+      <div class="panel-body" id="infoBody">
+        <p class="loading">Luetaan television tietoja…</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="js/catalog.js"></script>
+  <script src="js/platform.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
