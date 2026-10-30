@@ -56,6 +56,51 @@ failed check.
 - [ ] Nothing else changed in the same session — no region change at the same
       time. One variable at a time.
 
+## "It can't update in Europe" — read this before anything else
+
+An imported C2 that has not taken an update in a year is in an unusual position,
+and both halves of that position matter.
+
+**Why it cannot update** (LG-side mechanics; inferred, not measured):
+
+1. The update service keys off the packed market in `contiArea2All`, so a Thai
+   unit asks the Asia/Pacific channel — which has nothing useful for a European
+   network.
+2. The product code of an APAC SKU may simply not exist in the EU firmware
+   matrix.
+3. The 2022 build is old enough that the regional branch may be end-of-life.
+
+**What that buys you:** a year without updates means a year of patches not
+applied. If the faultmanager fix landed in a firmware you never received, the
+TV is still exploitable. That is the good case for this project.
+
+**What it costs you:** the same fact, seen from the network. webOS has had
+serious remotely-reachable bugs — including a 2026 zero-click chain (pairing
+bypass → unsigned IPK install) that LG patched in August 2026. A television
+that has not been patched in a year should be treated as an untrusted device on
+your LAN:
+
+- put it on a guest/IoT SSID or a separate VLAN,
+- do not port-forward anything to it,
+- if you root it, use root to *reduce* exposure (block outbound telemetry and
+  the second-screen services you do not use).
+
+**Sequencing rule:** do not "fix" the update problem before you have decided
+about root. An update may close the door you are about to walk through.
+
+```
+CanI.RootMy.TV says vulnerable?
+|
++-- yes --> install Sisu TV first
+|           --> faultmanager root
+|           --> Homebrew Channel
+|           --> freeze updates (lgtv-tbc or never accept OTA)
+|           --> replace Home
+|
++-- no  --> external box (Apple TV / Shield / LibreELEC)
+            or LG service-centre region change
+```
+
 ### 1. Root
 
 **First**: look up your model + firmware on [CanI.RootMy.TV](https://cani.rootmy.tv/).

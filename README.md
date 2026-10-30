@@ -139,6 +139,14 @@ the three launch strategies and the packaging pipeline.
 
 ---
 
+## Security note
+
+This TV has not taken a firmware update in a year and cannot get one on a
+European network. webOS has had remotely reachable vulnerabilities patched only
+through firmware, so treat the set as an untrusted device: keep it on a guest
+network, and never forward ports to it. See
+[docs/TAKE-OVER-THE-UI.md](docs/TAKE-OVER-THE-UI.md#it-cant-update-in-europe--read-this-before-anything-else).
+
 ## Status
 
 - Verified in a headless Chromium at 1920×1080 (screenshots above) and by unit
